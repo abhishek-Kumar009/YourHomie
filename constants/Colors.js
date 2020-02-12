@@ -3,6 +3,7 @@ export default {
     accentColor: '#ff6f00',
     ratingsColor: '#29a329',
     backColor: '#F3F3F3',
-    activeColor: '#ffe6e6'
+    activeColor: '#ffe6e6',
+    paymentBtnColor: '#ff6666'
 
 };

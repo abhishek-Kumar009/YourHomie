@@ -14,8 +14,11 @@ import { RestrauntData, DishData } from '../data/dummy-data';
 import Colors from '../constants/Colors';
 import MenuListItems from '../components/MenuListItems';
 import { useSelector, useDispatch } from 'react-redux';
-import { addItemAction } from '../store/actions/CartItem';
-import { removeItemAction } from '../store/actions/CartItem';
+import {
+  removeItemAction,
+  addItemAction,
+  clearCartAction
+} from '../store/actions/CartItem';
 
 const RestrauntDetailsScreen = props => {
   const restrauntId = props.navigation.getParam('restrauntId');
@@ -74,7 +77,7 @@ const RestrauntDetailsScreen = props => {
                 style={{}}
                 qty={dishesWthIds[dish.id]}
                 onSelectPositive={() => {
-                  dispatch(addItemAction(dish));
+                  dispatch(addItemAction(dish, currentRestraunt.id));
                 }}
                 onSelectNegative={() => {
                   dispatch(removeItemAction(dish));

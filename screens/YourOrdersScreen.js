@@ -2,13 +2,14 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import CustomHeaderButton from '../components/CustomHeaderButton';
+import { DishData } from '../data/dummy-data';
 
 const YourOrdersScreen = props => {
-  return (
-    <View style={styles.screen}>
-      <Text>Show all the orders here!</Text>
-    </View>
-  );
+  const orderItemDetails = props.navigation.getParam('dishDetails');
+  const totalAmount = props.navigation.getParam('totalPrice');
+  let allOrders;
+
+  return <View style={styles.screen}></View>;
 };
 
 YourOrdersScreen.navigationOptions = navData => {

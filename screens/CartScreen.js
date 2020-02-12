@@ -4,9 +4,14 @@ import CustomHeaderButton from '../components/CustomHeaderButton';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { useSelector, useDispatch } from 'react-redux';
 import AddButton from '../components/AddButton';
-import { addItemAction, removeItemAction } from '../store/actions/CartItem';
+import {
+  addItemAction,
+  removeItemAction,
+  clearCartAction
+} from '../store/actions/CartItem';
+import { RestrauntData } from '../data/dummy-data';
 import Colors from '../constants/Colors';
-
+import PaymentButton from '../components/PaymentButton';
 const CartScreen = props => {
   const dispatch = useDispatch();
   const totalAmount = useSelector(state => state.cartItemReducer.totalAmount);
@@ -25,6 +30,8 @@ const CartScreen = props => {
     return transformedCart.sort((a, b) => (a.price > b.price ? -1 : 1));
   });
 
+  const restrauntId = useSelector(state => state.cartItemReducer.restrauntId);
+
   let dishesWthIds = {};
   const allCartItems = useSelector(state => state.cartItemReducer.item);
   cartItems.map(
@@ -33,38 +40,59 @@ const CartScreen = props => {
         ? allCartItems[item.id].qty
         : 0)
   );
+  if (cartItems.length > 0) {
+    return (
+      <View style={styles.screen}>
+        <View style={styles.totalContainer}>
+          <Text style={styles.total}>Grand Total</Text>
+          <Text style={styles.totalPrice}>₹{totalAmount}</Text>
+        </View>
 
-  return (
-    <View style={styles.screen}>
-      <View style={styles.totalContainer}>
-        <Text style={styles.total}>Grand Total</Text>
-        <Text style={styles.totalPrice}>₹{totalAmount}</Text>
-      </View>
-
-      <ScrollView style={{ width: '100%' }}>
-        {cartItems.map(item => {
-          return (
-            <View key={item.id} style={styles.cartItemContainer}>
-              <View style={styles.itemDetailsContainer}>
-                <Text style={styles.itemTitle}>{item.title}</Text>
-                <Text style={styles.itemPrice}>₹{item.price}</Text>
+        <ScrollView style={{ width: '100%' }}>
+          {cartItems.map(item => {
+            return (
+              <View key={item.id} style={styles.cartItemContainer}>
+                <View style={styles.itemDetailsContainer}>
+                  <Text style={styles.itemTitle}>{item.title}</Text>
+                  <Text style={styles.itemPrice}>₹{item.price}</Text>
+                </View>
+                <AddButton
+                  qty={dishesWthIds[item.id]}
+                  style={{ marginLeft: 17 }}
+                  onSelectPositive={() => {
+                    dispatch(addItemAction(item, restrauntId));
+                  }}
+                  onSelectNegative={() => {
+                    dispatch(removeItemAction(item));
+                  }}
+                />
               </View>
-              <AddButton
-                qty={dishesWthIds[item.id]}
-                style={{ marginLeft: 17 }}
-                onSelectPositive={() => {
-                  dispatch(addItemAction(item));
-                }}
-                onSelectNegative={() => {
-                  dispatch(removeItemAction(item));
-                }}
-              />
-            </View>
-          );
-        })}
-      </ScrollView>
-    </View>
-  );
+            );
+          })}
+        </ScrollView>
+        <PaymentButton
+          onSelect={() => {
+            props.navigation.navigate({
+              routeName: 'yourOrders',
+              params: {
+                dishDetails: dishesWthIds,
+                totalPrice: totalAmount
+              }
+            });
+
+            dispatch(clearCartAction());
+          }}
+          style={{ justifyContent: 'flex-end' }}
+        />
+      </View>
+    );
+  } else {
+    return (
+      <View style={styles.noItemsCartContainer}>
+        <Text style={styles.noItemText}>Your cart is empty!</Text>
+      </View>
+    );
+  }
 };
 
 CartScreen.navigationOptions = navData => {
@@ -91,6 +119,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 15,
     backgroundColor: Colors.backColor
+  },
+  noItemsCartContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 15,
+    backgroundColor: Colors.backColor
+  },
+  noItemText: {
+    fontFamily: 'open-sans-regular',
+    fontSize: 14
   },
   cartItemContainer: {
     flexDirection: 'row',

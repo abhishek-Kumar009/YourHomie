@@ -10,7 +10,10 @@ import Colors from '../constants/Colors';
 
 const PaymentButton = props => {
   return (
-    <TouchableNativeFeedback style={{ ...props.style, width: '100%' }}>
+    <TouchableNativeFeedback
+      onPress={props.onSelect}
+      style={{ ...props.style, width: '100%' }}
+    >
       <View style={styles.btnContainer}>
         <Text style={styles.btnText}>Place Your Order</Text>
       </View>

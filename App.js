@@ -6,13 +6,16 @@ import { enableScreens } from 'react-native-screens';
 import RestrauntsContainer from './navigation/RestrauntsNavigator';
 import { combineReducers, createStore } from 'redux';
 import CartItemReducer from './store/reducers/CartItem';
+import OrdersReducer from './store/reducers/Orders';
 import { Provider } from 'react-redux';
+
 // import { composeWithDevTools } from 'redux-devtools-extension';
 
 enableScreens();
 
 const rootReducer = combineReducers({
-  cartItemReducer: CartItemReducer
+  cartItemReducer: CartItemReducer,
+  orderReducer: OrdersReducer
 });
 
 const store = createStore(rootReducer);

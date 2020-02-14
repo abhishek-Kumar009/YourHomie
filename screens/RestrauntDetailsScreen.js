@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   View,
   Text,
@@ -25,6 +25,12 @@ const RestrauntDetailsScreen = props => {
   const currentRestraunt = RestrauntData.find(
     restraunt => restraunt.id === restrauntId
   );
+  useEffect(() => {
+    props.navigation.setParams({
+      restrauntDetails: currentRestraunt
+    });
+  }, [currentRestraunt]);
+
   const dishes = DishData.filter(dish => dish.restrauntId === restrauntId);
   const currentDishes = dishes.filter(dish => dish.currentDish);
   let dishesWthIds = {};
@@ -104,6 +110,7 @@ const RestrauntDetailsScreen = props => {
 };
 
 RestrauntDetailsScreen.navigationOptions = navData => {
+  const restrauntDetails = navData.navigation.getParam('restrauntDetails');
   return {
     headerTitle: 'YourHomie!',
     headerRight: () => (
@@ -113,7 +120,10 @@ RestrauntDetailsScreen.navigationOptions = navData => {
           iconName='shopping-cart'
           onPress={() => {
             navData.navigation.navigate({
-              routeName: 'cartScreen'
+              routeName: 'cartScreen',
+              params: {
+                restrauntInfo: restrauntDetails
+              }
             });
           }}
         />

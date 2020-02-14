@@ -18,7 +18,7 @@ export const RestrauntData = [
 
 export const DishData = [
     new Dish('d11', 'r1', 'Bhindi Aloo', 'Stuffed bhindi with creamy boiled aloo', true, false, 4.2, 120),
-    new Dish('d12', 'r1', 'Gobi Matar', 'Stuffed Gobi with creamy boiled matar', true, false, 4.1, 130),
+    new Dish('d12', 'r1', 'Gobi Matar', 'Stuffed Gobi with creamy boiled matar', true, true, 4.1, 130),
     new Dish('d13', 'r1', 'Salsa chillie', 'Stuffed bhindi with creamy boiled aloo', true, false, 4.7, 170),
     new Dish('d14', 'r1', 'Chicken labadar', 'Stuffed chicken with creamy boiled gravy', false, true, 4.5, 200),
     new Dish('d15', 'r1', 'Chicken Curry', 'Stuffed bhindi with creamy boiled aloo', false, false, 4.2, 220),

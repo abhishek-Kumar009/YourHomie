@@ -1,17 +1,25 @@
 import React from 'react';
-import { View, Text, Button, StyleSheet, ScrollView } from 'react-native';
+import {
+  View,
+  Text,
+  Button,
+  StyleSheet,
+  ScrollView,
+  Alert
+} from 'react-native';
 import CustomHeaderButton from '../components/CustomHeaderButton';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { useSelector, useDispatch } from 'react-redux';
 import AddButton from '../components/AddButton';
+import { addOrderAction } from '../store/actions/Orders';
 import {
   addItemAction,
   removeItemAction,
   clearCartAction
 } from '../store/actions/CartItem';
-import { RestrauntData } from '../data/dummy-data';
 import Colors from '../constants/Colors';
 import PaymentButton from '../components/PaymentButton';
+import { RestrauntData } from '../data/dummy-data';
 const CartScreen = props => {
   const dispatch = useDispatch();
   const totalAmount = useSelector(state => state.cartItemReducer.totalAmount);
@@ -31,6 +39,17 @@ const CartScreen = props => {
   });
 
   const restrauntId = useSelector(state => state.cartItemReducer.restrauntId);
+  let title;
+  let imageUrl;
+  if (restrauntId !== '') {
+    title = RestrauntData.find(restraunt => restraunt.id === restrauntId).title;
+    imageUrl = RestrauntData.find(restraunt => restraunt.id === restrauntId)
+      .imageUrl;
+  }
+
+  const onPressHandler = () => {
+    props.navigation.navigate('restrauntScreen');
+  };
 
   let dishesWthIds = {};
   const allCartItems = useSelector(state => state.cartItemReducer.item);
@@ -72,13 +91,20 @@ const CartScreen = props => {
         </ScrollView>
         <PaymentButton
           onSelect={() => {
-            props.navigation.navigate({
-              routeName: 'yourOrders',
-              params: {
-                dishDetails: dishesWthIds,
-                totalPrice: totalAmount
-              }
-            });
+            dispatch(
+              addOrderAction(title, imageUrl, dishesWthIds, totalAmount)
+            );
+            props.navigation.navigate('restrauntScreen');
+            Alert.alert(
+              'Order Placed!',
+              'Check the status in Your Orders section',
+              [
+                {
+                  text: 'Okay',
+                  style: 'default'
+                }
+              ]
+            );
 
             dispatch(clearCartAction());
           }}

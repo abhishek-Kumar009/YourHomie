@@ -35,8 +35,10 @@ const GridListView = props => {
               })}
             </Text>
           </View>
-          <View style={styles.ratingsContainer}>
-            <Text style={styles.rating}>{props.ratings}</Text>
+          <View style={styles.ratingsContentContainer}>
+            <View style={styles.ratingsContainer}>
+              <Text style={styles.rating}>{props.ratings}</Text>
+            </View>
           </View>
         </View>
       </View>
@@ -46,13 +48,15 @@ const GridListView = props => {
 
 const styles = StyleSheet.create({
   gridItem: {
-    height: 100,
+    height: 80,
     flexDirection: 'row',
-    marginVertical: 5
+    marginVertical: 10
+    // borderBottomColor: Colors.backColor,
+    // borderBottomWidth: 1
   },
   imgContainer: {
-    width: '30%',
-    height: '100%',
+    width: 70,
+    height: 70,
     overflow: 'hidden',
     borderRadius: 5,
     marginRight: 12
@@ -81,14 +85,22 @@ const styles = StyleSheet.create({
     fontSize: 12,
     marginVertical: 4
   },
+  ratingsContentContainer: {
+    width: '30%',
+    height: '100%',
+
+    alignItems: 'flex-end'
+  },
   ratingsContainer: {
     width: 35,
     height: 25,
     borderRadius: 5,
     padding: 5,
     backgroundColor: Colors.ratingsColor,
-    justifyContent: 'center',
-    alignItems: 'center'
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    marginHorizontal: 14
+    // borderWidth: 1
   },
   rating: {
     fontFamily: 'open-sans-regular',

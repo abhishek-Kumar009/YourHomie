@@ -14,6 +14,11 @@ import YourOrdersScreen from '../screens/YourOrdersScreen';
 import FavoriteOrdersScreen from '../screens/FavoriteOrdersScreen';
 import AboutScreen from '../screens/AboutScreen';
 import FeedBackScreen from '../screens/FeedBackScreen';
+import {
+  Ionicons,
+  MaterialCommunityIcons,
+  MaterialIcons
+} from '@expo/vector-icons';
 const defaultNavOptions = {
   headerStyle: {
     backgroundColor: Platform.OS === 'android' ? Colors.primaryColor : ''
@@ -33,6 +38,15 @@ const RestrauntsContainer = createStackNavigator(
     paymentScreen: AddPaymentScreen
   },
   {
+    navigationOptions: {
+      drawerIcon: drawerConfig => (
+        <Ionicons
+          name='ios-restaurant'
+          size={23}
+          color={drawerConfig.tintColor}
+        />
+      )
+    },
     defaultNavigationOptions: defaultNavOptions
   }
 );
@@ -43,6 +57,15 @@ const BookMarkNavScreen = createStackNavigator(
     restrauntsNav: RestrauntsContainer
   },
   {
+    navigationOptions: {
+      drawerIcon: drawerConfig => (
+        <MaterialIcons
+          name='bookmark'
+          size={23}
+          color={drawerConfig.tintColor}
+        />
+      )
+    },
     defaultNavigationOptions: defaultNavOptions
   }
 );
@@ -52,6 +75,15 @@ const YourOrdersNavScreen = createStackNavigator(
     // restrauntsNav: RestrauntsContainer
   },
   {
+    navigationOptions: {
+      drawerIcon: drawerConfig => (
+        <MaterialCommunityIcons
+          name='food'
+          size={23}
+          color={drawerConfig.tintColor}
+        />
+      )
+    },
     defaultNavigationOptions: defaultNavOptions
   }
 );
@@ -61,6 +93,15 @@ const FavOrdersNavScreen = createStackNavigator(
     // restrauntsNav: RestrauntsContainer
   },
   {
+    navigationOptions: {
+      drawerIcon: drawerConfig => (
+        <MaterialIcons
+          name='favorite-border'
+          size={23}
+          color={drawerConfig.tintColor}
+        />
+      )
+    },
     defaultNavigationOptions: defaultNavOptions
   }
 );
@@ -85,18 +126,19 @@ const FeedBackNavScreen = createStackNavigator(
 
 const MenuDrawerContainer = createDrawerNavigator(
   {
-    restrauntsNavScreens: {
-      screen: RestrauntsContainer,
-      navigationOptions: {
-        drawerLabel: 'Restraunts'
-      }
-    },
     loginSignUp: {
       screen: LoginSignUpScreen,
       navigationOptions: {
         drawerLabel: 'Login or Sign Up'
       }
     },
+    restrauntsNavScreens: {
+      screen: RestrauntsContainer,
+      navigationOptions: {
+        drawerLabel: 'Restraunts'
+      }
+    },
+
     bookMark: {
       screen: BookMarkNavScreen,
       navigationOptions: {
@@ -129,12 +171,22 @@ const MenuDrawerContainer = createDrawerNavigator(
     }
   },
   {
+    // edgeWidth: 30,
+    // hideStatusBar: true,
+    // statusBarAnimation: 'fade',
+    // overlayColor: Colors.overlayColor,
+
+    initialRouteName: 'restrauntsNavScreens',
     contentOptions: {
       activeTintColor: Colors.accentColor,
       labelStyle: {
-        fontFamily: 'open-sans-regular',
-        fontSize: 16
+        fontFamily: 'open-sans-light',
+        fontSize: 18,
+        fontWeight: 'normal'
       }
+    },
+    drawerStyle: {
+      backgroundColor: 'red'
     }
   }
 );

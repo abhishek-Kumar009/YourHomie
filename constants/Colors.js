@@ -4,6 +4,7 @@ export default {
     ratingsColor: '#29a329',
     backColor: '#F3F3F3',
     activeColor: '#ffe6e6',
-    paymentBtnColor: '#ff6666'
+    paymentBtnColor: '#ff6666',
+    overlayColor: '#ffb84d'
 
 };
